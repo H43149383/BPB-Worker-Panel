@@ -179,6 +179,14 @@ export default {
                             }
                         });        
 
+                    case '/hello':
+                        return new Response(renderHelloPage(), {
+                            status: 200,
+                            headers: {
+                                'Content-Type': 'text/html;charset=utf-8',
+                            }
+                        });
+
                     case '/panel/password':
 
                         let passAuth = await Authenticate(request, env);
@@ -309,6 +317,76 @@ async function vlessOverWSHandler(request) {
 		status: 101,
 		webSocket: client,
 	});
+}
+
+function renderHelloPage() {
+    return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你好 · Hello</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #1f2a44, #0a0f1f 70%);
+      color: #fff;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .track {
+      width: min(1100px, 95vw);
+      padding: 24px 0;
+      border-top: 1px solid rgba(255,255,255,.18);
+      border-bottom: 1px solid rgba(255,255,255,.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .row {
+      display: flex;
+      gap: 32px;
+      margin: 10px 0;
+      white-space: nowrap;
+      width: max-content;
+      animation: slide 15s linear infinite;
+      font-size: clamp(24px, 4vw, 56px);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .row:nth-child(even) {
+      animation-direction: reverse;
+      animation-duration: 18s;
+    }
+    .item { text-shadow: 0 4px 18px rgba(0,0,0,.35); }
+    .c1 { color: #ff6b6b; }
+    .c2 { color: #ffd93d; }
+    .c3 { color: #6bffb0; }
+    .c4 { color: #6bc5ff; }
+    .c5 { color: #d58bff; }
+    .c6 { color: #ffffff; }
+    @keyframes slide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="track">
+    <div class="row">
+      <span class="item c1">你好</span><span class="item c2">Hello</span><span class="item c3">こんにちは</span><span class="item c4">안녕하세요</span><span class="item c5">Hola</span><span class="item c6">Bonjour</span>
+      <span class="item c1">你好</span><span class="item c2">Hello</span><span class="item c3">こんにちは</span><span class="item c4">안녕하세요</span><span class="item c5">Hola</span><span class="item c6">Bonjour</span>
+    </div>
+    <div class="row">
+      <span class="item c4">你好</span><span class="item c1">Привет</span><span class="item c2">مرحبا</span><span class="item c3">नमस्ते</span><span class="item c5">Olá</span><span class="item c6">Hallo</span>
+      <span class="item c4">你好</span><span class="item c1">Привет</span><span class="item c2">مرحبا</span><span class="item c3">नमस्ते</span><span class="item c5">Olá</span><span class="item c6">Hallo</span>
+    </div>
+  </div>
+</body>
+</html>`;
 }
 
 /**
